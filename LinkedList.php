@@ -1,6 +1,7 @@
 <?php
 
 include_once 'Node.php';
+
 class LinkedList
 {
     private $count;
@@ -14,7 +15,8 @@ class LinkedList
         $this->lastNode = null;
     }
 
-    public function addFirst($data){
+    public function addFirst($data)
+    {
         $node = new Node($data);
         $node->next = $this->firstNode;
         $this->firstNode = $node;
@@ -26,7 +28,8 @@ class LinkedList
         $this->count++;
     }
 
-    public function addLast($data){
+    public function addLast($data)
+    {
         if ($this->firstNode != null) {
             $node = new Node($data);
             $this->lastNode->next = $node;
@@ -38,7 +41,8 @@ class LinkedList
         }
     }
 
-    public function add($data,$index){
+    public function add($data, $index)
+    {
         $node = new Node($data);
         $current = $this->firstNode;
         $pre = $this->firstNode;
@@ -52,11 +56,53 @@ class LinkedList
         $node->next = $current;
     }
 
-    public function getLinkedList(){
+    public function removeFirst()
+    {
+        if ($this->firstNode != null) {
+            $this->firstNode = $this->firstNode->next;
+            $this->count--;
+        } else {
+            echo 'No node';
+        }
+    }
+
+    public function removeLast()
+    {
+        if ($this->firstNode != null) {
+            $current = $this->firstNode;
+            $pre = $this->firstNode;
+
+            while ($current->next->next != null) {
+                $pre = $current;
+                $current = $current->next;
+            }
+
+            $current->next = null;
+            $this->count--;
+        } else {
+            echo 'No node';
+        }
+    }
+
+    public function remove($index)
+    {
+        $current = $this->firstNode;
+        $pre = $this->firstNode;
+
+        for ($i = 0; $i < $index; $i++) {
+            $pre = $current;
+            $current = $current->next;
+        }
+        $pre->next = $current->next;
+        $current = $current->next;
+    }
+
+    public function getLinkedList()
+    {
         $arr = array();
         $current = $this->firstNode;
         while ($current != null) {
-            array_push($arr,$current->getNode());
+            array_push($arr, $current->readNode());
             $current = $current->next;
         }
         return $arr;
